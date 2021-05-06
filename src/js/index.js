@@ -1,9 +1,9 @@
 import '../sass/main.scss'
-import DisplayError from "./form";
+import SendData from "./sendData";
 import Modal from "./modal";
 
 window.addEventListener("load", function(event) {
-  DisplayError.init();
+  SendData.init();
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {

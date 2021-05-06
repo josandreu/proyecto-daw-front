@@ -1,8 +1,7 @@
 import {modalClose} from "./modal";
 
-class DisplayError {
+class SendData {
   static init() {
-    //document.getElementById('button').addEventListener('click', toggleError);
     sendData();
   }
 }
@@ -44,23 +43,4 @@ function removeLoader() {
   document.getElementById('loader').classList.add('hidden');
 }
 
-function toggleError() {
-  const errMessages = document.querySelectorAll('#error');
-  // Show error message
-  errMessages.forEach((el) => {
-    el.classList.toggle('hidden');
-  })
-
-  // Highlight input and label with red
-  const allBorders = document.querySelectorAll('.border-gray-200');
-  const allTexts = document.querySelectorAll('.text-gray-500');
-  allBorders.forEach((el) => {
-    el.classList.toggle('border-red-600');
-  })
-  allTexts.forEach((el) => {
-    el.classList.toggle('text-red-600');
-  })
-}
-
-
-export default DisplayError;
+export default SendData;
