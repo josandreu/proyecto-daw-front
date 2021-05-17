@@ -1,0 +1,41 @@
+.view {
+  display: block !important;
+  opacity: 1 !important;
+  transform: scale(1) rotate(0deg);
+  border-radius:4px;
+  //animation: selected 300ms 1 ease-in-out;
+}
+
+.alojamiento-filter-button-all-container {
+  //flex-basis: 100%;
+}
+
+span.hotel {
+  border-bottom-width: 2px;
+  --tw-bg-opacity: 0.75;
+  border-color: rgba(37,99,235,var(--tw-bg-opacity));
+}
+
+span.hostal {
+  border-bottom-width: 2px;
+  --tw-bg-opacity: 0.75;
+  border-color: rgba(5,150,105,var(--tw-bg-opacity));
+}
+
+span.camping {
+  border-bottom-width: 2px;
+  --tw-bg-opacity: 0.75;
+  border-color: rgba(220,38,38,var(--tw-bg-opacity));
+}
+
+span.albergue {
+  border-bottom-width: 2px;
+  --tw-bg-opacity: 0.75;
+  border-color: rgba(75,85,99,var(--tw-bg-opacity));
+}
+
+span.casa-rural {
+  border-bottom-width: 2px;
+  --tw-bg-opacity: 0.75;
+  border-color: rgba(251,191,36,var(--tw-bg-opacity));
+}
