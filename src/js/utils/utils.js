@@ -30,3 +30,10 @@ export function removeClass(element, name) {
   }
   element.className = arr1.join(" ");
 }
+
+export function addStars(index, rating) {
+  for(let i = 0; i < parseInt(rating); i++) {
+    document.querySelector(`#alojamiento-rating-${index} #star-${i}`).classList.remove('text-gray-400');
+    document.querySelector(`#alojamiento-rating-${index} #star-${i}`).classList.add('text-yellow-500');
+  }
+}

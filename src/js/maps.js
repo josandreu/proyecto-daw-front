@@ -1,5 +1,6 @@
 import iconMarkerPng from '../images/pin_32.png';
 import iconCluster from '../images/m1.png';
+import {addStars} from "./utils/utils";
 
 function getViewportWidth() {
   if(window.innerWidth) {
@@ -57,7 +58,7 @@ async function getAlojamientos() {
     return await response.json();
   } catch(error) {
     if(error) {
-      /*let response = await fetch('https://heineken.levelstage.com/wp-json/hk/v1/tiendas', requestOptions);
+      /*let response = await fetch('https://heineken.levelstage.com/wp-json/hk/v1/alojamientos', requestOptions);
       return await response.json();*/
       console.log(error);
     }
@@ -345,11 +346,18 @@ function showAlojamientoListFromData(index, marker) {
   let typeClass = marker.customInfo.tipo.toLowerCase().replace(" ", "-");
   const mainContainer = `        
                 <div class="alojamiento-info hidden bg-white w-full flex flex-col items-center rounded-md shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-2xl cursor-pointer ${typeClass}">
-                    <img src="${marker.customInfo.foto}" class="rounded-t-md object-cover h-36 w-full" alt="">
+                    <img src="${marker.customInfo.foto}" class="rounded-t-md object-cover h-40 w-full" alt="">
                     <div class="flex flex-col w-full p-4">
-                      <div class="py-2 flex justify-between items-center mb-2">
+                      <div class="py-2 flex justify-between items-center">
                         <div class="font-semibold text-xl mr-2 text-gray-900 dark:text-white">${marker.customInfo.nombre}</div>
                         <span class="transform transition-all duration-150 inline-block bg-opacity-75 text-xs hover:shadow-sm hover:scale-105 ${typeClass}">${marker.customInfo.tipo}</span>
+                      </div>
+                      <div id="alojamiento-rating-${index}" class="flex items-center mb-4">
+                          <svg id="star-0" class="mx-1 ml-0 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                          <svg id="star-1" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                          <svg id="star-2" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                          <svg id="star-3" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                          <svg id="star-4" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                       </div>
                       <div class="w-full">
                         <div class="alojamiento-directions mb-4">
@@ -439,7 +447,7 @@ async function initMap() {
 
   let clusterMarkers = [];
 
-  jsondata.forEach((tienda, index) => {
+  jsondata.forEach((alojamiento, index) => {
     // move the list beyond the map in mobile
     // moveAlojamientoListInMobile();
 
@@ -451,14 +459,29 @@ async function initMap() {
     // add markers to the map
     const iconMarker = iconMarkerPng;
     let marker = new google.maps.Marker({
-      position: new google.maps.LatLng(getLat(tienda), getLong(tienda)),
+      position: new google.maps.LatLng(getLat(alojamiento), getLong(alojamiento)),
       map: map,
-      title: tienda.title,
+      title: alojamiento.title,
       //icon: iconMarker,
-      customInfo: tienda,
+      customInfo: alojamiento,
     });
     let infoWindow = new google.maps.InfoWindow({
-      content: '<div class="infowindow"><h3>' + tienda.title + '</h3><p>' + tienda.direccion + '</p><p>' + tienda.localidad + '</p></div>',
+      content: `<div class="infowindow"><img class="pb-1 object-cover h-24 w-full" src="${alojamiento.foto}" alt="${alojamiento.title}">
+                  <h4 class="text-gray-800 pb-2 font-bold">${alojamiento.title}</h4>
+                  <div id="alojamiento-rating-${index}" class="flex items-center mb-4">
+                    <svg id="star-0" class="mx-1 ml-0 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                    <svg id="star-1" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                    <svg id="star-2" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                    <svg id="star-3" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                    <svg id="star-4" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                  </div>
+                  <p class="text-gray-800 pb-1">${alojamiento.direccion}</p>
+                  <p class="text-gray-800">${alojamiento.localidad}</p>
+                  <div class="flex justify-evenly items-center">
+                        <a href="${alojamiento.como_llegar}" class="tracking-wide text-blue-500 text-xs hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Cómo llegar</span></a>
+                        <a href="${alojamiento.web}" class="tracking-wide text-blue-500 text-xs hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Web</span></a>
+                  </div>
+                </div>`,
       maxWidth: 200,
     });
     // This event expects a click on a marker
@@ -495,7 +518,7 @@ async function initMap() {
         let json = null;
         // show the list
         showAlojamientoListFromData(index, marker);
-
+        addStars(index, marker.customInfo.puntuacion);
         // get and add distance to each element
         //let distance = getDistance(marker.getPosition(), place);
         //document.getElementsByClassName('alojamiento-info-distance-' + index)[0].textContent = distance + ' Km';
