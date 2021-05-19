@@ -8,9 +8,26 @@
 @import "modal";
 @import "markers";
 @import "filters";
+@import "tabs";
 @import "map";
 
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  .search-input-container {
+    label {
+      font-family: "Heading Pro", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      @media (min-width: 640px) {
+        font-size: 2rem;
+      }
+    }
+  }
+  .tab-toggler {
+    font-family: "Heading Pro", sans-serif;
+    font-size: 1.2rem;
+    @media (min-width: 640px) {
+      font-size: 1.4rem;
+    }
+  }
 }
