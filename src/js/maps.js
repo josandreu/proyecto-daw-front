@@ -117,7 +117,7 @@ function showPromoAlojamientos(alojamientos) {
     li.className += 'px-1 cursor-pointer';
     let item = document.createElement('a');
     // px-1 py-1 text-white rounded
-    item.className += 'alojamiento-filter-button transform transition-all duration-150 inline-block bg-white bg-opacity-75 text-xs hover:shadow-sm hover:scale-105" cursor-pointer border-b-2';
+    item.className += 'alojamiento-filter-button transform transition-all duration-150 inline-block bg-gray-100 bg-opacity-75 text-xs hover:shadow-sm hover:scale-105" cursor-pointer border-b-2';
     li.appendChild(item);
     addColourTextAlojamiento(alojamiento, item);
     list.appendChild(li);
@@ -251,29 +251,6 @@ function animateAndFilter(items) {
       filterLinks(el);
     });
   });
-}
-
-function addClass(element, name) {
-  let i, arr1, arr2;
-  arr1 = element.className.split(" ");
-  arr2 = name.split(" ");
-  for(i = 0; i < arr2.length; i++) {
-    if(arr1.indexOf(arr2[i]) === -1) {
-      element.className += " " + arr2[i];
-    }
-  }
-}
-
-function removeClass(element, name) {
-  let i, arr1, arr2;
-  arr1 = element.className.split(" ");
-  arr2 = name.split(" ");
-  for(i = 0; i < arr2.length; i++) {
-    while(arr1.indexOf(arr2[i]) > -1) {
-      arr1.splice(arr1.indexOf(arr2[i]), 1);
-    }
-  }
-  element.className = arr1.join(" ");
 }
 
 // calculate distance functions
