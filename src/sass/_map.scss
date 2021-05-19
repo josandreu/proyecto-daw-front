@@ -5,3 +5,12 @@
     height: calc(100vh - 148px);
   }
 }
+
+.gm-style-iw.gm-style-iw-c {
+  max-width: 300px !important;
+  max-height: 300px !important;
+  @media (min-width: 1024px) {
+    max-width: 300px !important;
+    max-height: 300px !important;
+  }
+}
