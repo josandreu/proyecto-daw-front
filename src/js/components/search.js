@@ -11,7 +11,9 @@ class Search {
         container.classList.add('hidden');
       }
     }
-    button.addEventListener('click', showInputContainer);
+    if(button) {
+      button.addEventListener('click', showInputContainer);
+    }
   }
 }
 

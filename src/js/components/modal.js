@@ -2,6 +2,7 @@ class Modal {
   static init() {
     const modal = document.querySelector('.main-modal');
     const closeButton = document.querySelectorAll('.modal-close');
+    const buttonOpenModal = document.getElementById('buttonOpenModal');
 
     const openModal = () => {
       modal.classList.remove('fadeOut');
@@ -21,7 +22,9 @@ class Modal {
         if (event.target === modal) modalClose();
       }
     }
-    document.getElementById('buttonOpenModal').addEventListener('click', openModal);
+    if(buttonOpenModal) {
+      buttonOpenModal.addEventListener('click', openModal);
+    }
   }
 }
 
