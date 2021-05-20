@@ -1,6 +1,8 @@
 import iconMarkerPng from '../images/pin_32.png';
 import iconCluster from '../images/m1.png';
 import {addStars} from "./utils/utils";
+import {getLocalStorageToken, getLocalStorageUserId} from "./login";
+import {optionsForAuthorizationFromStorage} from "./api/utils";
 
 function getViewportWidth() {
   if(window.innerWidth) {
@@ -49,17 +51,15 @@ function moveAndResizeAlojamientoListInDesktop() {
 }
 
 async function getAlojamientos() {
-  let requestOptions = {
-    method: 'GET',
-  };
+  let userId = getLocalStorageUserId();
+
+  let requestOptions = optionsForAuthorizationFromStorage('GET');
 
   try {
-    let response = await fetch('https://daw-wp-api.local/wp-json/api/v1/alojamientos', requestOptions);
+    let response = await fetch('https://daw-wp-api.local/wp-json/api/v1/alojamientos/author/' + userId, requestOptions);
     return await response.json();
   } catch(error) {
     if(error) {
-      /*let response = await fetch('https://heineken.levelstage.com/wp-json/hk/v1/alojamientos', requestOptions);
-      return await response.json();*/
       console.log(error);
     }
   }
@@ -369,8 +369,8 @@ function showAlojamientoListFromData(index, marker) {
                         </div>
                       </div>
                       <div class="py-2 mt-2 flex justify-evenly items-center">
-                        <a href="${marker.customInfo.como_llegar}" class="tracking-wide text-blue-500 text-sm hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Cómo llegar</span></a>
-                        <a href="${marker.customInfo.web}" class="tracking-wide text-blue-500 text-sm hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Web</span></a>
+                        <a target="_blank" href="${marker.customInfo.como_llegar}" class="tracking-wide text-blue-500 text-sm hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Cómo llegar</span></a>
+                        <a target="_blank" href="${marker.customInfo.web}" class="tracking-wide text-blue-500 text-sm hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Web</span></a>
                       </div>
                       <span id="info-coordinates" class="hidden info-coordinates-${index}">${marker.customInfo.coordenadas}</span>
                     </div>
@@ -448,14 +448,6 @@ async function initMap() {
   let clusterMarkers = [];
 
   jsondata.forEach((alojamiento, index) => {
-    // move the list beyond the map in mobile
-    // moveAlojamientoListInMobile();
-
-    //moveAndResizeAlojamientoListInDesktop();
-
-    // add coordinates
-    // addCoordinates(map, index);
-
     // add markers to the map
     const iconMarker = iconMarkerPng;
     let marker = new google.maps.Marker({
@@ -519,6 +511,7 @@ async function initMap() {
         // show the list
         showAlojamientoListFromData(index, marker);
         addStars(index, marker.customInfo.puntuacion);
+
         // get and add distance to each element
         //let distance = getDistance(marker.getPosition(), place);
         //document.getElementsByClassName('alojamiento-info-distance-' + index)[0].textContent = distance + ' Km';

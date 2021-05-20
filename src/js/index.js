@@ -8,12 +8,14 @@ import './components/tabs'
 import gpsIcon from '../images/gps.svg';
 import gpsIcon2 from '../images/gps2.svg';
 import {addEventTabs} from './components/tabs';
+import Login from "./login";
 
 window.addEventListener('load', function(event) {
   SendData.init();
 });
 
 document.addEventListener('DOMContentLoaded', function(event) {
+  Login.init();
   Modal.init();
   Search.init();
   addEventTabs();

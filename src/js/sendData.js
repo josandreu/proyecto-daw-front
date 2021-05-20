@@ -1,5 +1,6 @@
 import {modalClose} from "./components/modal";
 import {toggleError} from "./utils/errors";
+import {headersForAuthorizationFromStorage} from "./api/utils";
 
 class SendData {
   static init() {
@@ -8,31 +9,34 @@ class SendData {
 }
 
 function sendData() {
-  document.getElementById('insertAlojForm').addEventListener('submit',async function(e) {
-    e.preventDefault();
+  const form = document.getElementById('insertAlojForm');
+  if(form) {
+    form.addEventListener('submit',async function(e) {
+      e.preventDefault();
 
-    const postTitle = document.getElementById('post-title');
-    const direccion = document.getElementById('direccion');
-    const localidad = document.getElementById('localidad');
-    const coordenadas = document.getElementById('coordenadas');
-    const web = document.getElementById('web');
-    const comoLlegar = document.getElementById('como-llegar');
+      const postTitle = document.getElementById('post-title');
+      const direccion = document.getElementById('direccion');
+      const localidad = document.getElementById('localidad');
+      const coordenadas = document.getElementById('coordenadas');
+      const web = document.getElementById('web');
+      const comoLlegar = document.getElementById('como-llegar');
 
-    const data = [postTitle, direccion, localidad, coordenadas, web, comoLlegar];
+      const data = [postTitle, direccion, localidad, coordenadas, web, comoLlegar];
 
-    // si alguno de los campos del form no está completado no envía el formulario
-    if(!toggleError(data)) {
-      addLoader(); // loader
+      // si alguno de los campos del form no está completado no envía el formulario
+      if(!toggleError(data)) {
+        addLoader(); // loader
 
-      modalClose(); // cierra modal
+        modalClose(); // cierra modal
 
-      // envío de los datos por POST
-      const formData = new FormData(this);
-      const requestOptions = optionsData(formData);
-      fetchData(requestOptions);
-    }
-    return false;
-  })
+        // envío de los datos por POST
+        const formData = new FormData(this);
+        const requestOptions = optionsData(formData);
+        fetchData(requestOptions);
+      }
+      return false;
+    })
+  }
 }
 
 function fetchData(requestOptions, url = 'https://daw-wp-api.local/wp-json/api/v1/crear-alojamiento') {
@@ -45,9 +49,7 @@ function fetchData(requestOptions, url = 'https://daw-wp-api.local/wp-json/api/v
 }
 
 function optionsData(data) {
-  let myHeaders = new Headers();
-  myHeaders.append("Authorization", "Basic am9zYW5kcmV1OkBaaDIyZyVCcU9JWSFUUDdsag==");
-  myHeaders.append("Cookie", "XDEBUG_SESSION=PHPSTORM");
+  let myHeaders = headersForAuthorizationFromStorage();
 
   return {
     method: 'POST',
