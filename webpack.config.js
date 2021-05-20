@@ -31,10 +31,23 @@ module.exports = {
     //new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
-      title: 'Encuentra tu tienda',
+      title: 'Tus alojamientos',
       template: path.resolve(__dirname, './src/template.html'), // template file
       filename: 'index.html', // output file
     }),
+    // We need to set our desired filename for other html files though.
+    new HtmlWebpackPlugin({
+      inject: false,
+      title: 'Tus alojamientos registro de nuevo usuario',
+      template:  path.resolve(__dirname, './src/registro-template.html'),
+      filename: 'registro.html',
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      title: 'Tus alojamientos conectar usuario',
+      template:  path.resolve(__dirname, './src/login-template.html'),
+      filename: 'login.html',
+    })
   ],
 
   module: {
