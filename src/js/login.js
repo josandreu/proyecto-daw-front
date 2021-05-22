@@ -1,15 +1,15 @@
 import {toggleError} from "./utils/errors";
-import {getNewToken, validateLocalStorageToken} from "./api/utils";
+import {getNewToken, setRequestDataToLocalStorage} from "./api/utils";
 
 class Login {
   static init() {
-    checkLocalStorageToken();
+    //checkLocalStorageToken();
     logOut();
     getUserData();
   }
 }
 
-function checkLocalStorageToken() {
+/*function checkLocalStorageToken() {
   // si estamos en el mapa
   if(window.location.pathname !== '/login.html' && window.location.pathname !== '/registro.html') {
     // si no existe
@@ -25,15 +25,7 @@ function checkLocalStorageToken() {
       validateLogin();
     }
   }
-}
-
-export function getLocalStorageToken() {
-  return localStorage.getItem('token');
-}
-
-export function getLocalStorageUserId() {
-  return localStorage.getItem('userId');
-}
+}*/
 
 function getUserData() {
   const loginForm = document.getElementById('userLoginForm');
@@ -52,7 +44,7 @@ function getUserData() {
         const requestOptions = getNewToken(userNameText, passwordText);
         fetch("https://daw-wp-api.local/wp-json/jwt-auth/v1/token", requestOptions)
           .then(result => result.json())
-          .then(result => requestJwt(result))
+          .then(result => setRequestDataToLocalStorage(result))
           .catch(function(error) {
             document.getElementById('errorDataLogin').classList.remove('hidden');
             console.log('error', error);
@@ -62,46 +54,6 @@ function getUserData() {
   }
 }
 
-function requestJwt(result) {
-  console.log(result);
-  if(result.statusCode === 200) {
-    const token = result.data.token;
-    const userEmail = result.data.email;
-    const user = result.data.nicename;
-    const userId = result.data.id;
-    localStorage.setItem('token', token);
-    localStorage.setItem('userEmail', userEmail);
-    localStorage.setItem('user', user);
-    localStorage.setItem('userId', userId);
-    document.getElementById('userLoginForm').reset();
-    window.location.href = 'index.html';
-  } else {
-    document.getElementById('errorDataLogin').classList.remove('hidden');
-    document.querySelector('#errorDataLogin p').innerHTML = result.message;
-  }
-}
-
-
-function validateIndex() {
-  validateLocalStorageToken().then(function(response){
-    if(response.statusCode !== 200) {
-      window.location.href = 'login.html';
-    } else {
-      console.log('OK');
-    }
-  })
-}
-
-function validateLogin() {
-  console.log('validate')
-  validateLocalStorageToken().then(function(response){
-    if(response.statusCode !== 200) {
-      localStorage.clear();
-    } else {
-      console.log('OK');
-    }
-  })
-}
 
 function logOut() {
   let button = document.getElementById('buttonLogOut');

@@ -1,8 +1,7 @@
 import iconMarkerPng from '../images/pin_32.png';
 import iconCluster from '../images/m1.png';
-import {addStars} from "./utils/utils";
-import {getLocalStorageToken, getLocalStorageUserId} from "./login";
-import {optionsForAuthorizationFromStorage} from "./api/utils";
+import {addStarsToInfoWindow, addStarsToList} from "./utils/utils";
+import {getLocalStorageUserId, requestOptionsForAuthorizationFromStorage} from "./api/utils";
 
 function getViewportWidth() {
   if(window.innerWidth) {
@@ -50,13 +49,13 @@ function moveAndResizeAlojamientoListInDesktop() {
   }
 }
 
-async function getAlojamientos() {
+async function getAlojamientos(url = 'https://daw-wp-api.local/wp-json/api/v1/alojamientos/author/') {
   let userId = getLocalStorageUserId();
 
-  let requestOptions = optionsForAuthorizationFromStorage('GET');
+  let requestOptions = requestOptionsForAuthorizationFromStorage('GET');
 
   try {
-    let response = await fetch('https://daw-wp-api.local/wp-json/api/v1/alojamientos/author/' + userId, requestOptions);
+    let response = await fetch(url + userId, requestOptions);
     return await response.json();
   } catch(error) {
     if(error) {
@@ -109,7 +108,7 @@ function removeDuplicates(value, index, self) {
   return self.indexOf(value) === index;
 }
 
-function showPromoAlojamientos(alojamientos) {
+function showTypeAlojamientos(alojamientos) {
   const list = document.getElementById('type-list');
   list.innerHTML = '';
   alojamientos.forEach(alojamiento => {
@@ -123,14 +122,16 @@ function showPromoAlojamientos(alojamientos) {
     addColourTextAlojamiento(alojamiento, item);
     list.appendChild(li);
   });
-  // create the all items button
-  let li = document.createElement('li');
-  li.className += 'alojamiento-filter-button-all-container';
-  let item = document.createElement('a');
-  item.className += 'alojamiento-filter-button-all text-right text-xs ml-5 cursor-pointer text-bold';
-  item.textContent += 'Ver todos';
-  li.appendChild(item);
-  list.appendChild(li);
+  if(alojamientos.length > 0) {
+    // create the all items button
+    let li = document.createElement('li');
+    li.className += 'alojamiento-filter-button-all-container';
+    let item = document.createElement('a');
+    item.className += 'alojamiento-filter-button-all text-right text-xs ml-5 cursor-pointer text-bold';
+    item.textContent += 'Ver todos';
+    li.appendChild(item);
+    list.appendChild(li);
+  }
 }
 
 function addColourTextAlojamiento(alojamiento, item) {
@@ -379,6 +380,27 @@ function showAlojamientoListFromData(index, marker) {
   containerList.insertAdjacentHTML('beforeend', mainContainer);
 }
 
+function showIfListEmpty() {
+  const containerList = document.getElementById('alojamientos-container');
+  const mainContainer = `
+          <div class="w-full bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="p-4 flex space-x-4 md:flex-row flex-col md:text-left text-center items-center">
+                <div class="bg-red-50 p-3 md:self-start rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current text-red-700" width="24" height="24" viewBox="0 0 24 24"><path d="M12 5.177l8.631 15.823h-17.262l8.631-15.823zm0-4.177l-12 22h24l-12-22zm-1 9h2v6h-2v-6zm1 9.75c-.689 0-1.25-.56-1.25-1.25s.561-1.25 1.25-1.25 1.25.56 1.25 1.25-.561 1.25-1.25 1.25z"/></svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-semibold tracking-wide text-red-700">
+                        Lista vacía
+                    </h1>
+                    <p class="text-gray-500">
+                        Puedes insertar tu primer alojamiento desde el botón de <a class="font-bold" href="#buttonOpenModal">'Añadir Alojamiento'</a> situado en la parte superior.
+                    </p>
+                </div>
+            </div>
+  `;
+  containerList.insertAdjacentHTML('beforeend', mainContainer);
+}
+
 // Listen for orientation changes
 //window.addEventListener("orientationchange", moveAndResizeAlojamientoListInDesktop, false);
 
@@ -433,8 +455,8 @@ async function initMap() {
   console.log(jsondata);
 
   let types = getInitTypes(jsondata);
-  // todo
-  showPromoAlojamientos(types);
+
+  showTypeAlojamientos(types);
 
   const madrid = new google.maps.LatLng(40.4166802, -3.7055517);
   const mapOptions = {
@@ -460,7 +482,7 @@ async function initMap() {
     let infoWindow = new google.maps.InfoWindow({
       content: `<div class="infowindow"><img class="pb-1 object-cover h-24 w-full" src="${alojamiento.foto}" alt="${alojamiento.title}">
                   <h4 class="text-gray-800 pb-2 font-bold">${alojamiento.title}</h4>
-                  <div id="alojamiento-rating-${index}" class="flex items-center mb-4">
+                  <div id="" class="alojamiento-rating-info-${index} flex items-center mb-4">
                     <svg id="star-0" class="mx-1 ml-0 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                     <svg id="star-1" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                     <svg id="star-2" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
@@ -496,12 +518,17 @@ async function initMap() {
     clusterClass: "custom-clustericon",
   });
 
+
   map.addListener("bounds_changed", () => {
     let typesFromMarkers = [];
     const place = map.getCenter();
     let bounds = map.getBounds();
     // clean previous list, if exists
     cleanList();
+
+    if(clusterMarkers.length < 1) {
+      showIfListEmpty();
+    }
     // get each marker from the clusterMarkers
     clusterMarkers.forEach((marker, index) => {
       if(bounds.contains(marker.getPosition())) {
@@ -510,8 +537,8 @@ async function initMap() {
         let json = null;
         // show the list
         showAlojamientoListFromData(index, marker);
-        addStars(index, marker.customInfo.puntuacion);
-
+        addStarsToList(index, marker.customInfo.puntuacion);
+        addStarsToInfoWindow(index, marker.customInfo.puntuacion);
         // get and add distance to each element
         //let distance = getDistance(marker.getPosition(), place);
         //document.getElementsByClassName('alojamiento-info-distance-' + index)[0].textContent = distance + ' Km';
@@ -521,12 +548,11 @@ async function initMap() {
         }*/
 
         // todo add coordinates, for click in the card and show in the map
-        addCoordinates(map, index);
-      }
+        addCoordinates(map, index);}
     });
 
     typesFromMarkers = getTypes(typesFromMarkers);
-    showPromoAlojamientos(typesFromMarkers);
+    showTypeAlojamientos(typesFromMarkers);
 
     let alojamientoItems = document.querySelectorAll('.alojamientos-container div.alojamiento-info');
     animateAndFilter(alojamientoItems);
@@ -551,7 +577,7 @@ async function initMap() {
     }
   });
 
-  const locationButton = document.getElementById('btn-location');
+  //const locationButton = document.getElementById('btn-location');
   //setUserCurrentPosition(locationButton, map);
   let alojamientoItems = document.querySelectorAll('.alojamiento-container div.alojamiento-info');
   animateAndFilter(alojamientoItems);

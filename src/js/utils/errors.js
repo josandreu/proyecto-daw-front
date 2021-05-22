@@ -7,8 +7,10 @@ export function toggleError(elements) {
     let span = el.nextElementSibling.nextElementSibling;
     if(elId === 'como-llegar') span = el.nextElementSibling.nextElementSibling.nextElementSibling;
     if(isEmpty(el.value)) {
-      span.classList.toggle('hidden');
+      span.classList.remove('hidden');
       isError = true;
+    } else {
+      span.classList.add('hidden');
     }
   })
   return isError;
