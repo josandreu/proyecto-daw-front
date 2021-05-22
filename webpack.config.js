@@ -39,7 +39,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: false,
       title: 'Tus alojamientos registro de nuevo usuario',
-      template:  path.resolve(__dirname, './src/registro-template.html'),
+      template:  path.resolve(__dirname, './src/register-template.html'),
       filename: 'registro.html',
     }),
     new HtmlWebpackPlugin({
