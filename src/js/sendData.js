@@ -39,7 +39,7 @@ function sendData() {
   }
 }
 
-function fetchData(requestOptions, url = 'https://daw-wp-api.tk/ºwp-json/api/v1/crear-alojamiento') {
+function fetchData(requestOptions, url = 'https://daw-wp-api.tk/wp-json/api/v1/crear-alojamiento') {
   fetch(url, requestOptions).then(response => response.text())
     .then(result => console.log(result))
     .then(document.getElementById('insertAlojForm').reset())
