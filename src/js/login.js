@@ -3,29 +3,10 @@ import {getNewToken, setRequestDataToLocalStorage} from "./api/utils";
 
 class Login {
   static init() {
-    //checkLocalStorageToken();
     logOut();
     getUserData();
   }
 }
-
-/*function checkLocalStorageToken() {
-  // si estamos en el mapa
-  if(window.location.pathname !== '/login.html' && window.location.pathname !== '/registro.html') {
-    // si no existe
-    if(localStorage.getItem('token') === null) {
-      window.location.href = 'login.html';
-  } else {
-      // si existe chequeamos el valor guardado y vemos si es correcto con /validate, de no ser así redirigimos
-      validateIndex();
-    }
-  } else {
-    // si estamos en login
-    if(localStorage.getItem('token') !== null) {
-      validateLogin();
-    }
-  }
-}*/
 
 function getUserData() {
   const loginForm = document.getElementById('userLoginForm');
@@ -42,7 +23,7 @@ function getUserData() {
 
       if(!toggleError(data)) {
         const requestOptions = getNewToken(userNameText, passwordText);
-        fetch("https://daw-wp-api.local/wp-json/jwt-auth/v1/token", requestOptions)
+        fetch("https://daw-wp-api.tk/wp-json/jwt-auth/v1/token", requestOptions)
           .then(result => result.json())
           .then(result => setRequestDataToLocalStorage(result))
           .catch(function(error) {

@@ -49,7 +49,7 @@ function validateLogin() {
   })
 }
 
-function loginCreateUser(pass = 'C0eg e7Vz b8SI WhAS WOnE lYIz', user = 'create.users.daw@gmail.com', url = 'https://daw-wp-api.local/wp-json/jwt-auth/v1/token') {
+function loginCreateUser(pass = 'DldV iYaO S0ma ESSc eakP ahPO', user = 'create.users.daw@gmail.com', url = 'https://daw-wp-api.tk/wp-json/jwt-auth/v1/token') {
   localStorage.clear();
   const requestOptions = getNewToken(user, pass);
   fetch(url, requestOptions)

@@ -49,7 +49,7 @@ function moveAndResizeAlojamientoListInDesktop() {
   }
 }
 
-async function getAlojamientos(url = 'https://daw-wp-api.local/wp-json/api/v1/alojamientos/author/') {
+async function getAlojamientos(url = 'https://daw-wp-api.tk/wp-json/api/v1/alojamientos/author/') {
   let userId = getLocalStorageUserId();
 
   let requestOptions = requestOptionsForAuthorizationFromStorage('GET');
@@ -450,6 +450,9 @@ const clusterStyles = [
 let map;
 
 async function initMap() {
+  if(localStorage.getItem('token') === null) {
+    window.location.href = 'login.html';
+  }
   let jsondata = await getAlojamientos();
 
   console.log(jsondata);

@@ -30,7 +30,7 @@ function getRegisterData() {
   }
 }
 
-function createUser({userNameText, passwordText, emailText}, url = 'https://daw-wp-api.local/wp-json/wp/v2/users') {
+function createUser({userNameText, passwordText, emailText}, url = 'https://daw-wp-api.tk/wp-json/wp/v2/users') {
   let requestOptions = requestOptionsForAuthorizationFromStorage('POST');
   fetch(`${url}?username=${userNameText}&password=${passwordText}&email=${emailText}`, requestOptions)
     .then(result => {
