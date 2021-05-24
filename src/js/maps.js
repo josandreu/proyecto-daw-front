@@ -465,6 +465,9 @@ async function initMap() {
   const mapOptions = {
     center: madrid,
     zoom: 5.2,
+    mapTypeControlOptions: {
+      mapTypeControl: false
+    }
   };
 
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
