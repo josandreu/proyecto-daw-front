@@ -1,9 +1,11 @@
 .desktopTabs {
-  position: absolute;
-  top: 11%;
-  left: 10px;
-  overflow: hidden;
-  height: 80%;
+  @media (min-width: 1024px) {
+    position: absolute;
+    top: 5%;
+    left: 10px;
+    overflow: hidden;
+    height: 80%;
+  }
 
   .alojamientos-container {
     overflow-y: scroll;
