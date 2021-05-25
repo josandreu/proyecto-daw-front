@@ -4,13 +4,11 @@ import Modal from './components/modal';
 import Search from './components/search';
 import './maps';
 import './components/tabs'
-
-import gpsIcon from '../images/gps.svg';
-import gpsIcon2 from '../images/gps2.svg';
 import {addEventTabs} from './components/tabs';
 import Login from "./login";
 import Routing from "./routing";
 import Register from "./register";
+import colorsBg from '../images/colors-bg.jpeg';
 
 window.addEventListener('load', function(event) {
   SendData.init();
@@ -23,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   Modal.init();
   Search.init();
   addEventTabs();
+  document.getElementById('colors-bg').src = colorsBg;
 });
 
 window.onresize = addEventTabs;
