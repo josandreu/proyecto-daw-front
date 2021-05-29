@@ -9,6 +9,9 @@ import Login from "./login";
 import Routing from "./routing";
 import Register from "./register";
 import colorsBg from '../images/colors-bg.jpeg';
+import logo from '../images/logo.png'
+const logoImg = document.getElementById('logo');
+const background = document.getElementById('colors-bg');
 
 window.addEventListener('load', function(event) {
   SendData.init();
@@ -21,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
   Modal.init();
   Search.init();
   addEventTabs();
-  document.getElementById('colors-bg').src = colorsBg;
+  if(background) background.src = colorsBg;
+  if(logoImg) logoImg.src = logo;
 });
 
 window.onresize = addEventTabs;
