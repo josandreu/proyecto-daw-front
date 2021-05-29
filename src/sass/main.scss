@@ -1,39 +1,12 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import "variables";
-@import "fonts";
-@import "~@fortawesome/fontawesome-free/css/all.min.css";
-@import "form";
-@import "modal";
-@import "markers";
-@import "filters";
-@import "tabs";
-@import "map";
-
-
-body {
-  .search-input-container {
-    label {
-      font-family: "Heading Pro", sans-serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      @media (min-width: 640px) {
-        font-size: 2rem;
-      }
-    }
-    #searchInputContainer {
-      @media (max-width: 640px) {
-        margin-left: auto;
-        margin-right: auto;
-      }
-    }
-  }
-  .tab-toggler {
-    font-family: "Heading Pro", sans-serif;
-    font-size: 1.2rem;
-    @media (min-width: 640px) {
-      font-size: 1.4rem;
-    }
-  }
-}
+@import "utils/variables";
+@import "utils/fonts";
+@import "components/form";
+@import "sections/modal";
+@import "components/markers";
+@import "components/filters";
+@import "components/tabs";
+@import "sections/map";
+@import "components/logo";
