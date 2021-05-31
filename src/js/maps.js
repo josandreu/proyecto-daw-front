@@ -269,7 +269,6 @@ function returnPosition(position) {
   return position;
 }
 
-// todo
 function setUserCurrentPosition(locationButton, map) {
   //map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
   locationButton.addEventListener("click", () => {
@@ -581,8 +580,8 @@ async function initMap() {
     }
   });
 
-  //const locationButton = document.getElementById('btn-location');
-  //setUserCurrentPosition(locationButton, map);
+  const locationButton = document.getElementById('geolocation-link');
+  setUserCurrentPosition(locationButton, map);
   let alojamientoItems = document.querySelectorAll('.alojamiento-container div.alojamiento-info');
   animateAndFilter(alojamientoItems);
 }
