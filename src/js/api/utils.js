@@ -40,7 +40,6 @@ export function getNewToken(userName, password) {
   return {
     method: 'POST',
     body: formData,
-    //redirect: 'follow'
   };
 }
 

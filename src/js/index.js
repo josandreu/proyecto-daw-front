@@ -10,8 +10,10 @@ import Routing from "./routing";
 import Register from "./register";
 import colorsBg from '../images/colors-bg.jpeg';
 import logo from '../images/logo.png'
+import geoLogo from '../images/gps2.svg';
 const logoImg = document.getElementById('logo');
 const background = document.getElementById('colors-bg');
+const imgGeo = document.getElementById('geolocation-icon');
 
 window.addEventListener('load', function(event) {
   SendData.init();
@@ -26,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   addEventTabs();
   if(background) background.src = colorsBg;
   if(logoImg) logoImg.src = logo;
+  if(imgGeo) imgGeo.src = geoLogo;
 });
 
 window.onresize = addEventTabs;
