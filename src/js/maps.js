@@ -371,6 +371,7 @@ function showAlojamientoListFromData(index, marker) {
                       <div class="py-2 mt-2 flex justify-evenly items-center">
                         <a target="_blank" href="${marker.customInfo.como_llegar}" class="tracking-wide text-blue-500 text-sm hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Cómo llegar</span></a>
                         <a target="_blank" href="${marker.customInfo.web}" class="tracking-wide text-blue-500 text-sm hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Web</span></a>
+                        <a id="delete-alojamiento" href="#" class="tracking-wide text-red-500 text-sm hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Eliminar</span></a>
                       </div>
                       <span id="info-coordinates" class="hidden info-coordinates-${index}">${marker.customInfo.coordenadas}</span>
                     </div>
