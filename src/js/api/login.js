@@ -1,5 +1,5 @@
-import {toggleError} from "./utils/errors";
-import {getNewToken, setRequestDataToLocalStorage} from "./api/utils";
+import {toggleError} from "../utils/errors";
+import {getNewToken, setRequestDataToLocalStorage} from "./utils";
 
 class Login {
   static init() {

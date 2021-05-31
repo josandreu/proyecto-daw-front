@@ -1,6 +1,6 @@
-import {modalClose} from "./components/modal";
-import {toggleError} from "./utils/errors";
-import {headersForAuthorizationFromStorage} from "./api/utils";
+import {modalClose} from "../components/modal";
+import {toggleError} from "../utils/errors";
+import {headersForAuthorizationFromStorage} from "./utils";
 
 class SendData {
   static init() {

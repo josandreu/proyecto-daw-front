@@ -1,5 +1,5 @@
-import {toggleError} from "./utils/errors";
-import {requestOptionsForAuthorizationFromStorage} from "./api/utils";
+import {toggleError} from "../utils/errors";
+import {requestOptionsForAuthorizationFromStorage} from "./utils";
 
 class Register {
   static init() {

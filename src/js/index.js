@@ -1,13 +1,13 @@
 import '../sass/main.scss'
-import SendData from './sendData';
 import Modal from './components/modal';
 import Search from './components/search';
 import './maps';
 import './components/tabs'
 import {addEventTabs} from './components/tabs';
-import Login from "./login";
+import SendData from './api/sendData';
+import Login from './api/login';
 import Routing from "./routing";
-import Register from "./register";
+import Register from "./api/register";
 import colorsBg from '../images/colors-bg.jpeg';
 import logo from '../images/logo.png'
 import geoLogo from '../images/gps2.svg';
