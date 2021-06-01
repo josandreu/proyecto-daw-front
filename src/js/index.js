@@ -1,4 +1,6 @@
-import '../sass/main.scss'
+import '../sass/main.scss';
+import '../../node_modules/@fortawesome/fontawesome-free/css/all.css';
+import '../../node_modules/@fortawesome/fontawesome-free/js/regular.js';
 import Modal from './components/modal';
 import Search from './components/search';
 import './maps';
