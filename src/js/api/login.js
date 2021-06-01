@@ -23,7 +23,7 @@ function getUserData() {
 
       if(!toggleError(data)) {
         const requestOptions = getNewToken(userNameText, passwordText);
-        fetch("https://daw-wp-api.tk/wp-json/jwt-auth/v1/token", requestOptions)
+        fetch("https://www.proyecto-wp-api.tk/wp-json/jwt-auth/v1/token", requestOptions)
           .then(result => result.json())
           .then(result => setRequestDataToLocalStorage(result))
           .catch(function(error) {

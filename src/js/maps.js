@@ -1,7 +1,8 @@
 import iconMarkerPng from '../images/pin_32.png';
 import iconCluster from '../images/m1.png';
-import {addStarsToInfoWindow, addStarsToList} from "./utils/utils";
-import {getLocalStorageUserId, requestOptionsForAuthorizationFromStorage} from "./api/utils";
+import {addStarsToInfoWindow, addStarsToList} from './utils/utils';
+import {getLocalStorageUserId, requestOptionsForAuthorizationFromStorage} from './api/utils';
+import {setAlojamientoDeleteEvent} from './api/delete'
 
 function getViewportWidth() {
   if(window.innerWidth) {
@@ -49,7 +50,7 @@ function moveAndResizeAlojamientoListInDesktop() {
   }
 }
 
-async function getAlojamientos(url = 'https://daw-wp-api.tk/wp-json/api/v1/alojamientos/author/') {
+async function getAlojamientos(url = 'https://www.proyecto-wp-api.tk/wp-json/api/v1/alojamientos/author/') {
   let userId = getLocalStorageUserId();
 
   let requestOptions = requestOptionsForAuthorizationFromStorage('GET');
@@ -333,7 +334,7 @@ function getCoordinates(item) {
 function addCoordinates(map, index) {
   let coordinateElement = document.getElementsByClassName('info-coordinates-' + index)[0];
   let coordinates = getCoordinates(coordinateElement);
-  let parent = coordinateElement.parentNode.parentNode;
+  let parent = coordinateElement.previousElementSibling;
   parent.addEventListener('click', function() {
     map.setCenter({lat: parseFloat(coordinates[0]), lng: parseFloat(coordinates[1])});
     map.setZoom(17);
@@ -345,11 +346,12 @@ function showAlojamientoListFromData(index, marker) {
   const containerList = document.getElementById('alojamientos-container');
   let typeClass = marker.customInfo.tipo.toLowerCase().replace(" ", "-");
   const mainContainer = `        
-                <div class="alojamiento-info hidden bg-white w-full flex flex-col items-center rounded-md shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-2xl cursor-pointer ${typeClass}">
+                <div class="alojamiento-info hidden bg-white w-full flex flex-col items-center rounded-md shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-2xl ${typeClass}">
                     <img src="${marker.customInfo.foto}" class="rounded-t-md object-cover h-40 w-full" alt="">
                     <div class="flex flex-col w-full p-4">
                       <div class="py-2 flex justify-between items-center">
-                        <div class="font-semibold text-xl mr-2 text-gray-900 dark:text-white">${marker.customInfo.nombre}</div>
+                        <div class="font-semibold text-xl mr-2 text-gray-900 dark:text-white cursor-pointer">${marker.customInfo.nombre}</div>
+                        <span id="info-coordinates" class="hidden info-coordinates-${index}">${marker.customInfo.coordenadas}</span>
                         <span class="transform transition-all duration-150 inline-block bg-opacity-75 text-xs hover:shadow-sm hover:scale-105 ${typeClass}">${marker.customInfo.tipo}</span>
                       </div>
                       <div id="alojamiento-rating-${index}" class="flex items-center mb-4">
@@ -371,9 +373,8 @@ function showAlojamientoListFromData(index, marker) {
                       <div class="py-2 mt-2 flex justify-evenly items-center">
                         <a target="_blank" href="${marker.customInfo.como_llegar}" class="tracking-wide text-blue-500 text-sm hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Cómo llegar</span></a>
                         <a target="_blank" href="${marker.customInfo.web}" class="tracking-wide text-blue-500 text-sm hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Web</span></a>
-                        <a id="delete-alojamiento" href="#" class="tracking-wide text-red-500 text-sm hover:underline py-2 px-2 inline-flex items-center"><span class="mx-auto">Eliminar</span></a>
+                        <div class="tracking-wide text-red-500 text-sm hover:underline py-2 px-2 inline-flex items-center cursor-pointer delete-alojamiento-container"><span class="hidden">${marker.customInfo.id}</span><span class="mx-auto">Eliminar</span></div>
                       </div>
-                      <span id="info-coordinates" class="hidden info-coordinates-${index}">${marker.customInfo.coordenadas}</span>
                     </div>
                 </div>
   `;
@@ -504,7 +505,7 @@ async function initMap() {
     });
     // This event expects a click on a marker
     // When this event is fired the Info Window is opened.
-    marker.addListener("click", () => {
+    marker.addListener('click', () => {
       infoWindow.open(map, marker);
     });
     // Event that closes the Info Window with a click on the map
@@ -560,6 +561,7 @@ async function initMap() {
 
     let alojamientoItems = document.querySelectorAll('.alojamientos-container div.alojamiento-info');
     animateAndFilter(alojamientoItems);
+    setAlojamientoDeleteEvent(document.querySelectorAll('.delete-alojamiento-container'));
   });
 
   // create autocomplete Maps search

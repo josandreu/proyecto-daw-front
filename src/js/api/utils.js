@@ -24,7 +24,7 @@ export function headersForAuthorizationFromStorage() {
   return myHeaders;
 }
 
-export function validateLocalStorageToken(url = 'https://daw-wp-api.tk/wp-json/jwt-auth/v1/token/validate') {
+export function validateLocalStorageToken(url = 'https://www.proyecto-wp-api.tk/wp-json/jwt-auth/v1/token/validate') {
   let requestOptions = requestOptionsForAuthorizationFromStorage('POST');
 
   return fetch(url, requestOptions)
