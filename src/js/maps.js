@@ -50,7 +50,7 @@ function moveAndResizeAlojamientoListInDesktop() {
   }
 }
 
-async function getAlojamientos(url = 'https://www.proyecto-wp-api.tk/wp-json/api/v1/alojamientos/author/') {
+async function getAlojamientos(url = 'https://daw-wp-api.tk/wp-json/api/v1/alojamientos/author/') {
   let userId = getLocalStorageUserId();
 
   let requestOptions = requestOptionsForAuthorizationFromStorage('GET');

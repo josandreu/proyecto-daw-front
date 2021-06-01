@@ -2,7 +2,7 @@ import {headersForAuthorizationFromStorage} from "./utils";
 
 export async function deleteAlojamiento(id) {
   const requestOptions = optionsData();
-  return fetch(`https://www.proyecto-wp-api.tk/wp-json/api/v1/eliminar-alojamiento/${id}`, requestOptions);
+  return fetch(`https://daw-wp-api.tk/wp-json/api/v1/eliminar-alojamiento/${id}`, requestOptions);
 }
 
 export function setAlojamientoDeleteEvent(deleteAlojamientosContainers) {
