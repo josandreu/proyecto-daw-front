@@ -470,9 +470,8 @@ async function initMap() {
   };
 
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  const divAlojamiento = document.getElementById('alojamiento-container');
-
   let clusterMarkers = [];
+  let currentInfoWindow = null;
 
   jsondata.forEach((alojamiento, index) => {
     // add markers to the map
@@ -506,7 +505,12 @@ async function initMap() {
     // This event expects a click on a marker
     // When this event is fired the Info Window is opened.
     marker.addListener('click', () => {
+      if (currentInfoWindow != null) {
+        currentInfoWindow.close();
+      }
       infoWindow.open(map, marker);
+      currentInfoWindow = infoWindow;
+      map.panTo(marker.getPosition());
     });
     // Event that closes the Info Window with a click on the map
     google.maps.event.addListener(map, 'click', function() {
