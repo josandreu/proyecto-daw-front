@@ -33,5 +33,3 @@ document.addEventListener('DOMContentLoaded', function(event) {
   if(imgGeo) imgGeo.src = geoLogo;
 });
 
-window.onresize = addEventTabs;
-
