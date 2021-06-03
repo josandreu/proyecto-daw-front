@@ -285,6 +285,23 @@
             </div>
         </div>
     </div>
+    <div id="card_panel" class="main-modal fixed w-full inset-0 z-50 overflow-hidden flex justify-center items-center hidden">
+        <div class="modal-container bg-white w-6/12 md:max-w-11/12 mx-auto rounded-xl z-50 overflow-y-auto">
+            <div class="modal-content py-4 text-left px-6">
+                <div class="flex justify-between items-center pb-3">
+                    <p class="text-2xl font-bold text-red-500">Error</p>
+                    <div id="card_close" class="modal-close cursor-pointer z-50">
+                        <svg class="fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 18 18">
+                            <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="flex justify-center text-red-500">
+                    <p>Lo sentimos, pero no ha sido posible determinar su ubicación.<br><strong>¿Ha habilitado los servicios de localización?</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="./js/accordion.js"></script>
 <script src="bundle.js"></script>

@@ -302,7 +302,17 @@ function setUserCurrentPosition(locationButton, map) {
 function handleLocationError(browserHasGeolocation, pos) {
   console.log(browserHasGeolocation ? "Error: The Geolocation service failed. Position: " + pos : "Error: Your browser doesn't support geolocation.");
   let span = document.getElementById('info-no-location');
-  span.textContent = 'Lo sentimos, pero no ha sido posible determinar su ubicación.'
+  //span.textContent = 'Lo sentimos, pero no ha sido posible determinar su ubicación. ¿Ha habilitado los servicios de localización?';
+  //window.alert('Lo sentimos, pero no ha sido posible determinar su ubicación. ¿Ha habilitado los servicios de localización?');
+
+  const card_panel = document.getElementById('card_panel')
+  if(card_panel.classList.contains('hidden')) {
+    // Show modal
+    card_panel.classList.remove('hidden')
+    card_panel.classList.add('block')
+    // Start animation open
+    card_panel.classList.add('card_open')
+  }
 }
 
 function rad(x) {

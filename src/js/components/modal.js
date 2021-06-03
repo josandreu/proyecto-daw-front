@@ -10,7 +10,7 @@ class Modal {
       modal.style.display = 'flex';
     }
 
-    for (let i = 0; i < closeButton.length; i++) {
+    for(let i = 0; i < closeButton.length; i++) {
 
       const elements = closeButton[i];
 
@@ -18,8 +18,8 @@ class Modal {
 
       modal.style.display = 'none';
 
-      window.onclick = function (event) {
-        if (event.target === modal) modalClose();
+      window.onclick = function(event) {
+        if(event.target === modal) modalClose();
       }
     }
     if(buttonOpenModal) {
@@ -32,6 +32,11 @@ export const modalClose = () => {
   const modal = document.querySelector('.main-modal');
   modal.classList.remove('fadeIn');
   modal.classList.add('fadeOut');
+  const card_panel = document.getElementById('card_panel');
+  card_panel.classList.add('hidden');
+  card_panel.classList.remove('block');
+  // Remove animation open
+  card_panel.classList.remove('card_open');
   setTimeout(() => {
     modal.style.display = 'none';
   }, 500);
