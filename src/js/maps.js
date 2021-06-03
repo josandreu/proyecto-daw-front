@@ -511,10 +511,14 @@ async function initMap() {
       //icon: iconMarker,
       customInfo: alojamiento,
     });
+    let type = alojamiento.tipo.toLowerCase().replace(" ", "-");
     let infoWindow = new google.maps.InfoWindow({
       content: `<div class="infowindow"><img class="pb-1 object-cover h-24 w-full" src="${alojamiento.foto}" alt="${alojamiento.title}">
-                  <h4 class="text-gray-800 pb-2 font-bold">${alojamiento.title}</h4>
-                  <div id="" class="alojamiento-rating-info-${index} flex items-center mb-4">
+                  <div class="pb-2 flex justify-between items-center">
+                    <h4 class="text-gray-800 font-bold">${alojamiento.title}</h4>
+                    <span class="transform transition-all duration-150 inline-block bg-opacity-75 text-xs hover:shadow-sm hover:scale-105 ${type}">${alojamiento.tipo}</span>
+                  </div>
+                  <div id="" class="alojamiento-rating-info-${index} flex items-center mb-2">
                     <svg id="star-0" class="mx-1 ml-0 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                     <svg id="star-1" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
                     <svg id="star-2" class="mx-1 w-4 h-4 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
