@@ -381,6 +381,26 @@ function showAlojamientoListFromData(index, marker) {
   containerList.insertAdjacentHTML('beforeend', mainContainer);
 }
 
+function showIfNoMarkers() {
+  const containerList = document.getElementById('alojamientos-container');
+  containerList.innerHTML = `
+          <div class="w-full bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="p-4 flex space-x-4 md:flex-row flex-col md:text-left text-center items-center">
+                <div class="bg-red-50 p-3 md:self-start rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current text-red-700" width="24" height="24" viewBox="0 0 24 24"><path d="M12 5.177l8.631 15.823h-17.262l8.631-15.823zm0-4.177l-12 22h24l-12-22zm-1 9h2v6h-2v-6zm1 9.75c-.689 0-1.25-.56-1.25-1.25s.561-1.25 1.25-1.25 1.25.56 1.25 1.25-.561 1.25-1.25 1.25z"/></svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-semibold tracking-wide text-red-700">
+                        Lista vacía
+                    </h1>
+                    <p class="text-gray-500">
+                        No existe ningún alojamiento en esta localización.
+                    </p>
+                </div>
+            </div>
+  `;
+}
+
 function showIfListEmpty() {
   const containerList = document.getElementById('alojamientos-container');
   const mainContainer = `
@@ -456,8 +476,6 @@ async function initMap() {
   }
   let jsondata = await getAlojamientos();
 
-  console.log(jsondata);
-
   let types = getInitTypes(jsondata);
 
   showTypeAlojamientos(types);
@@ -532,16 +550,16 @@ async function initMap() {
     let typesFromMarkers = [];
     const place = map.getCenter();
     let bounds = map.getBounds();
+    let anyMarker = false;
     // clean previous list, if exists
     cleanList();
-
     if(clusterMarkers.length < 1) {
       showIfListEmpty();
     }
     // get each marker from the clusterMarkers
     clusterMarkers.forEach((marker, index) => {
       if(bounds.contains(marker.getPosition())) {
-        // get the brands
+        // get the types
         typesFromMarkers.push(marker.customInfo.tipo);
         let json = null;
         // show the list
@@ -555,17 +573,21 @@ async function initMap() {
 /*        if(document.getElementsByClassName('alojamiento-info-distance-' + index)[0].textContent === '0.00 Km') {
           document.getElementsByClassName('alojamiento-info-distance-' + index)[0].textContent = '';
         }*/
-
-        // todo add coordinates, for click in the card and show in the map
-        addCoordinates(map, index);}
+        anyMarker = true;
+        // coordinates, for click in the card and show in the map
+        addCoordinates(map, index);
+      }
     });
-
     typesFromMarkers = getTypes(typesFromMarkers);
     showTypeAlojamientos(typesFromMarkers);
 
     let alojamientoItems = document.querySelectorAll('.alojamientos-container div.alojamiento-info');
     animateAndFilter(alojamientoItems);
     setAlojamientoDeleteEvent(document.querySelectorAll('.delete-alojamiento-container'));
+
+    if(!anyMarker) {
+      showIfNoMarkers();
+    }
   });
 
   // create autocomplete Maps search
